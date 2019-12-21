@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Inject, Param, Put, ValidationPipe } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, Inject, Param, Put, UseInterceptors, ValidationPipe } from '@nestjs/common';
+import { ApiOkResponse } from '@nestjs/swagger';
 import { User } from './user.class';
 import { UserService } from './user.service';
 
@@ -13,6 +14,11 @@ export class UserController {
   }
 
   @Get('search/:username')
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({
+    isArray: true,
+    type: User,
+  })
   public searchUser(@Param('username') username: string): Promise<User[]> {
     return this.userService.getUser({
       username: {
@@ -22,6 +28,11 @@ export class UserController {
   }
 
   @Get(':username')
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({
+    isArray: true,
+    type: User,
+  })
   public async getUserByUsername(@Param('username') username: string): Promise<User> {
     return (await this.userService.getUser({
       username: {
