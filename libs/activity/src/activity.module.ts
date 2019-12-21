@@ -1,5 +1,5 @@
 import { MongoModule } from '@app/mongo';
-import { Module } from '@nestjs/common';
+import { HttpService, Module } from '@nestjs/common';
 import { ActivityController } from './activity.controller';
 import { ActivityService } from './activity.service';
 
@@ -7,7 +7,7 @@ import { ActivityService } from './activity.service';
   controllers: [ActivityController],
   exports: [ActivityService],
   imports: [MongoModule],
-  providers: [ActivityService],
+  providers: [ActivityService, HttpService],
 })
 export class ActivityModule {
 }

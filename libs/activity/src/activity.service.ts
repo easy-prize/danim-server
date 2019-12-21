@@ -1,5 +1,5 @@
 import { MongoService } from '@app/mongo';
-import { Injectable } from '@nestjs/common';
+import { HttpService, Inject, Injectable } from '@nestjs/common';
 import { validateOrReject } from 'class-validator';
 import { Collection, ObjectId } from 'mongodb';
 import { ActivityInfo } from './activity-info.class';
@@ -9,6 +9,8 @@ import { IActivity } from './activity.interface';
 @Injectable()
 export class ActivityService {
   private activityCollection: Collection<IActivity>;
+  @Inject()
+  private httpService: HttpService;
 
   constructor(mongo: MongoService) {
     this.activityCollection = mongo.db().collection('activities');
@@ -28,6 +30,7 @@ export class ActivityService {
   }
 
   public async cacheRelatedLinkInfo(activity: Activity[]): Promise<ActivityInfo[]> {
+    this.httpService.get('asdf');
     return [new ActivityInfo()];
   }
 }
