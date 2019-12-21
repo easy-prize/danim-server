@@ -46,4 +46,16 @@ export class OwnershipService {
       },
     });
   }
+
+  public async transfer(ownership: ObjectId, to: string) {
+    await this.ownershipCollection.updateOne({
+      _id: {
+        $eq: ownership,
+      },
+    }, {
+      $set: {
+        ownerPhoneNumber: to,
+      },
+    });
+  }
 }

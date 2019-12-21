@@ -1,5 +1,5 @@
 import { UserService } from '@app/user';
-import { ClassSerializerInterceptor, Controller, Get, Headers, Inject, Param, Put, UseInterceptors } from '@nestjs/common';
+import { ClassSerializerInterceptor, Controller, Get, Headers, Inject, Param, Put, Query, UseInterceptors } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ObjectId } from 'mongodb';
 import { OwnershipService } from './ownership.service';
@@ -33,5 +33,11 @@ export class OwnershipController {
   @ApiBearerAuth()
   public async useTicket(@Param('id') ticketId: string, @Headers('authorization') token: string) {
     await this.ownershipService.useTicket(ObjectId.createFromHexString(ticketId));
+  }
+
+  @Get('gift/:id')
+  @ApiBearerAuth()
+  public async transfer(@Param('id') ownership: string, @Query('to') to: string) {
+    await this.ownershipService.transfer(ObjectId.createFromHexString(ownership), to);
   }
 }
