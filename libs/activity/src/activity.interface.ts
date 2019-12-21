@@ -6,4 +6,5 @@ export interface IActivity {
   description: string;
   review: ObjectId[];
   image: string;
+  author: ObjectId;
 }

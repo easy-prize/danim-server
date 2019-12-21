@@ -1,15 +1,18 @@
 import { ObjectId } from 'mongodb';
 import { IActivity } from './activity.interface';
 
-export class Activity implements IActivity {
+export class ActivityInfo implements IActivity {
+  public activity: string;
+  public name: string;
+  public description: string;
+  public thumbnail: [string];
   public agency: string;
   public author: ObjectId;
-  public description: string;
   public image: string;
   public review: ObjectId[];
   public title: string;
 
-  constructor(activity: IActivity) {
+  constructor(activity: ActivityInfo) {
     Object.assign(activity);
   }
 }

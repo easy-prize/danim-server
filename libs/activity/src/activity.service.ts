@@ -2,6 +2,7 @@ import { MongoService } from '@app/mongo';
 import { Injectable } from '@nestjs/common';
 import { validateOrReject } from 'class-validator';
 import { Collection, ObjectId } from 'mongodb';
+import { ActivityInfo } from './activity-info.class';
 import { Activity } from './activity.class';
 import { IActivity } from './activity.interface';
 
@@ -24,5 +25,9 @@ export class ActivityService {
         $in: ids,
       },
     }).map((i) => new Activity(i)).toArray();
+  }
+
+  public async cacheRelatedLinkInfo(activity: Activity[]): Promise<ActivityInfo[]> {
+    return [new ActivityInfo()];
   }
 }
