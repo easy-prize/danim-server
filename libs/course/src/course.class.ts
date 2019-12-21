@@ -8,4 +8,5 @@ export class Course implements ICourse {
   public review: ObjectId[];
   public thumbnail: string;
   public title: string;
+  public activities: ObjectId[];
 }
