@@ -1,8 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude, Expose, Transform } from 'class-transformer';
 import { IsBase64, IsBoolean, IsEmail, IsNumberString, IsOptional, IsString } from 'class-validator';
+import { ObjectId } from 'mongodb';
 import { IUser } from './user.interface';
 
 export class User implements IUser {
+  @Exclude()
+  // tslint:disable-next-line:variable-name
+  public _id?: ObjectId;
+
+  @Expose()
+  @Transform((i: ObjectId) => i.toHexString())
+  public get id(): ObjectId {
+    return this._id;
+  }
+
   @ApiProperty({
     example: 'user',
   })

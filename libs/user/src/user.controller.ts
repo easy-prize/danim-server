@@ -3,6 +3,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
+  Headers,
   Inject,
   NotFoundException,
   Param,
@@ -11,7 +12,7 @@ import {
   UseInterceptors,
   ValidationPipe,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AuthDto } from './auth.dto';
 import { AuthResponse } from './auth.response';
 import { User } from './user.class';
@@ -36,6 +37,20 @@ export class UserController {
   @Put()
   public async createUser(@Body(new ValidationPipe()) user: User): Promise<void> {
     await this.userService.create(user);
+  }
+
+  @Get()
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({
+    type: User,
+  })
+  @ApiBearerAuth()
+  public async getMyInfo(@Headers() { authorization: token }): Promise<User> {
+    return (await this.userService.getUser({
+      _id: {
+        $eq: this.userService.verify((token as string).split(' ')[1]).idx,
+      },
+    }, false))[0];
   }
 
   @Get('search/:username')

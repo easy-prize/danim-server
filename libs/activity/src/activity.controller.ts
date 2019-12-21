@@ -1,6 +1,6 @@
 import { UserService } from '@app/user';
 import { Body, Controller, Headers, Inject, Put, ValidationPipe } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Activity } from './activity.class';
 import { ActivityService } from './activity.service';
 
@@ -13,11 +13,12 @@ export class ActivityController {
   private userService: UserService;
 
   @Put()
-  public async addActivity(@Body(new ValidationPipe()) activity: Activity, @Headers('Authorization') token: string): Promise<void> {
-    const userId = this.userService.verify(token).idx;
-    await this.activityService.create({
+  @ApiBearerAuth()
+  public async addActivity(@Body(new ValidationPipe()) activity: Activity, @Headers() { authorization: token }): Promise<void> {
+    const userId = this.userService.verify((token as string).split(' ')[1]).idx;
+    await this.activityService.create(new Activity({
       ...activity,
       author: userId,
-    });
+    }));
   }
 }

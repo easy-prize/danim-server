@@ -7,6 +7,7 @@ const bootstrap = async () => {
   const options = new DocumentBuilder()
     .setTitle('DANIM')
     .setDescription('Danim API description')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

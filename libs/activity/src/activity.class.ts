@@ -21,6 +21,6 @@ export class Activity implements IActivity {
   public title: string;
 
   constructor(activity: IActivity) {
-    Object.assign(activity);
+    Object.assign(this, activity);
   }
 }

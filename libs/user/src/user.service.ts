@@ -38,7 +38,7 @@ export class UserService {
     if (!user || user.password !== password) {
       throw new BadRequestException();
     }
-    return this.sign(user);
+    return this.sign(user as User);
   }
 
   public verify(token): {
