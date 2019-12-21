@@ -1,13 +1,13 @@
 import { MongoModule } from '@app/mongo';
-import { HttpService, Module } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
 import { ActivityController } from './activity.controller';
 import { ActivityService } from './activity.service';
 
 @Module({
   controllers: [ActivityController],
   exports: [ActivityService],
-  imports: [MongoModule],
-  providers: [ActivityService, HttpService],
+  imports: [MongoModule, HttpModule],
+  providers: [ActivityService],
 })
 export class ActivityModule {
 }
