@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
 import { IsBase64, IsBoolean, IsEmail, IsNumberString, IsOptional, IsString } from 'class-validator';
 import { IUser } from './user.interface';
 
@@ -12,7 +11,6 @@ export class User implements IUser {
   @ApiProperty({
     example: 'P@ssw0rd',
   })
-  @Exclude()
   @IsString()
   public password: string;
   @ApiProperty({
