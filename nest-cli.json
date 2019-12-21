@@ -55,6 +55,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/review/tsconfig.lib.json"
       }
+    },
+    "course": {
+      "type": "library",
+      "root": "libs/course",
+      "entryFile": "index",
+      "sourceRoot": "libs/course/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/course/tsconfig.lib.json"
+      }
     }
   },
   "compilerOptions": {

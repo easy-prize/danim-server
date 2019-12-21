@@ -28,6 +28,9 @@
       ],
       "@app/review": [
         "libs/review/src"
+      ],
+      "@app/course": [
+        "libs/course/src"
       ]
     }
   },
