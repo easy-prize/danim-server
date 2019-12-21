@@ -1,3 +1,4 @@
+import { IActivityInfo } from './activity-info.interface';
 import { ObjectId } from 'mongodb';
 
 export interface IActivity {
@@ -6,5 +7,6 @@ export interface IActivity {
   description: string;
   review: ObjectId[];
   image: string;
+  links: ObjectId[];
   author: ObjectId;
 }
