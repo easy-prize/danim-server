@@ -1,5 +1,5 @@
 import { MongoService } from '@app/mongo';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Collection, FilterQuery } from 'mongodb';
 import { AuthDto } from './auth.dto';
@@ -15,6 +15,13 @@ export class UserService {
   }
 
   public async create(user: User): Promise<void> {
+    if (await this.userCollection.find({
+      username: {
+        $eq: user.username,
+      },
+    }).next()) {
+      throw new ConflictException();
+    }
     await this.userCollection.insertOne(user);
   }
 
