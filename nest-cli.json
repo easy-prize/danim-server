@@ -37,6 +37,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/user/tsconfig.lib.json"
       }
+    },
+    "activity": {
+      "type": "library",
+      "root": "libs/activity",
+      "entryFile": "index",
+      "sourceRoot": "libs/activity/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/activity/tsconfig.lib.json"
+      }
     }
   },
   "compilerOptions": {

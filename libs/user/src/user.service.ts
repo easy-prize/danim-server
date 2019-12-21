@@ -5,10 +5,11 @@ import { validateOrReject } from 'class-validator';
 import { Collection, FilterQuery } from 'mongodb';
 import { AuthDto } from './auth.dto';
 import { User } from './user.class';
+import { IUser } from './user.interface';
 
 @Injectable()
 export class UserService {
-  private readonly userCollection: Collection<User>;
+  private readonly userCollection: Collection<IUser>;
 
   constructor(mongo: MongoService, private readonly jwtService: JwtService) {
     this.userCollection = mongo.db().collection('users');
