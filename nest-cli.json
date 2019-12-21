@@ -46,6 +46,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/activity/tsconfig.lib.json"
       }
+    },
+    "review": {
+      "type": "library",
+      "root": "libs/review",
+      "entryFile": "index",
+      "sourceRoot": "libs/review/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/review/tsconfig.lib.json"
+      }
     }
   },
   "compilerOptions": {

@@ -15,6 +15,7 @@
     "@app/config": "<rootDir>/../libs/config/src",
     "@app/mongo": "<rootDir>/../libs/mongo/src",
     "@app/user": "<rootDir>/../libs/user/src",
-    "@app/activity": "<rootDir>/../libs/activity/src"
+    "@app/activity": "<rootDir>/../libs/activity/src",
+    "@app/review": "<rootDir>/../libs/review/src"
   }
 }
