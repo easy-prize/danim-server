@@ -1,7 +1,7 @@
 import { MongoService } from '@app/mongo';
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Collection, FilterQuery } from 'mongodb';
+import { Collection, FilterQuery, ObjectId } from 'mongodb';
 import { AuthDto } from './auth.dto';
 import { User } from './user.class';
 import { IUser } from './user.interface';
@@ -41,15 +41,26 @@ export class UserService {
     return this.sign(user);
   }
 
+  public verify(token): {
+    id: string,
+    idx: ObjectId,
+  } {
+    const data = this.jwtService.verify<{
+      id: string,
+      idx: string,
+    }>(token);
+    return {
+      ...data,
+      idx: ObjectId.createFromHexString(data.idx),
+    };
+  }
+
   private sign(user: User) {
     return this.jwtService.sign({
       id: user.username,
+      idx: (user as User & {
+        _id: ObjectId,
+      })._id.toHexString(),
     });
-  }
-
-  private verify(token): string {
-    return this.jwtService.verify<{
-      id: string,
-    }>(token).id;
   }
 }

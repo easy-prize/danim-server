@@ -9,6 +9,7 @@ export class ActivityInfo implements IActivity {
   public image: string;
   public review: ObjectId[];
   public title: string;
+  public links: ObjectId[];
 
   constructor(activity: ActivityInfo) {
     Object.assign(activity);
