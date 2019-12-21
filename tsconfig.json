@@ -25,6 +25,9 @@
       ],
       "@app/activity": [
         "libs/activity/src"
+      ],
+      "@app/review": [
+        "libs/review/src"
       ]
     }
   },
