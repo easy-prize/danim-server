@@ -1,9 +1,16 @@
 import { AppModule } from '@app/app';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  const options = new DocumentBuilder()
+    .setTitle('DANIM')
+    .setDescription('Danim API description')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
+  await app.listen(process.env.PORT || 3000);
 };
 
 bootstrap().then();
