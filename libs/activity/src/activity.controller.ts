@@ -23,6 +23,16 @@ export class ActivityController {
     }));
   }
 
+  @Get()
+  @ApiBearerAuth()
+  @UseInterceptors(ClassSerializerInterceptor)
+  public async getMyActivities(@Headers() { authorization: token }) {
+    const userId = this.userService.verify((token as string).split(' ')[1]).idx;
+    return this.activityService.getActivity({
+      author: userId,
+    });
+  }
+
   @Get(':id')
   @UseInterceptors(ClassSerializerInterceptor)
   public async getActivityById(@Param('id') id: string) {
