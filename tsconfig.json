@@ -13,6 +13,9 @@
     "paths": {
       "@app/app": [
         "libs/app/src"
+      ],
+      "@app/config": [
+        "libs/config/src"
       ]
     }
   },
