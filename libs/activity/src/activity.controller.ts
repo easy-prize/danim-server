@@ -1,6 +1,7 @@
 import { UserService } from '@app/user';
-import { Body, Controller, Headers, Inject, Put, ValidationPipe } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, Headers, Inject, Param, Put, UseInterceptors, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ObjectId } from 'mongodb';
 import { Activity } from './activity.class';
 import { ActivityService } from './activity.service';
 
@@ -20,5 +21,25 @@ export class ActivityController {
       ...activity,
       author: userId,
     }));
+  }
+
+  @Get(':id')
+  @UseInterceptors(ClassSerializerInterceptor)
+  public async getActivityById(@Param('id') id: string) {
+    return this.activityService.getActivity({
+      _id: {
+        $eq: ObjectId.createFromHexString(id),
+      },
+    });
+  }
+
+  @Get('search/:name')
+  @UseInterceptors(ClassSerializerInterceptor)
+  public async getActivityAutocomplete(@Param('name') name: string) {
+    return this.activityService.getActivity({
+      title: {
+        $regex: name,
+      },
+    }, true);
   }
 }
