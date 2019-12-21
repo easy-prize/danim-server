@@ -12,6 +12,7 @@
   },
   "moduleNameMapper": {
     "@app/app": "<rootDir>/../libs/app/src",
-    "@app/config": "<rootDir>/../libs/config/src"
+    "@app/config": "<rootDir>/../libs/config/src",
+    "@app/mongo": "<rootDir>/../libs/mongo/src"
   }
 }
