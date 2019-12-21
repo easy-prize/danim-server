@@ -45,6 +45,9 @@ export class UserService {
     id: string,
     idx: ObjectId,
   } {
+    if (/^Bearer/i.test(token)) {
+      token = token.split(' ')[1];
+    }
     const data = this.jwtService.verify<{
       id: string,
       idx: string,
