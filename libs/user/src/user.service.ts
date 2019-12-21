@@ -1,7 +1,6 @@
 import { MongoService } from '@app/mongo';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { validateOrReject } from 'class-validator';
 import { Collection, FilterQuery } from 'mongodb';
 import { AuthDto } from './auth.dto';
 import { User } from './user.class';
@@ -16,7 +15,6 @@ export class UserService {
   }
 
   public async create(user: User): Promise<void> {
-    await validateOrReject(user);
     await this.userCollection.insertOne(user);
   }
 
