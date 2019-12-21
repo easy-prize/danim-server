@@ -12,11 +12,14 @@ import { validateOrReject } from 'class-validator';
 @Injectable()
 export class ActivityService {
   private readonly activityCollection: Collection<IActivity>;
+  private readonly activityInfoCollection: Collection<IActivityInfo>;
+
   @Inject()
   private readonly httpService: HttpService;
 
   constructor(mongo: MongoService) {
     this.activityCollection = mongo.db().collection('activities');
+    this.activityInfoCollection = mongo.db().collection('activityInfo');
   }
 
   public async create(activity: Activity): Promise<void> {
@@ -32,7 +35,7 @@ export class ActivityService {
     }).map((i) => new Activity(i)).toArray();
   }
 
-  public async cacheRelatedLinkInfo(activity: Activity): Promise<IActivityInfo[]> {
+  public async cacheRelatedLinkInfo(activity: Activity) {
     const items: IActivityInfo[] = [];
     const { status, data } = await this.httpService.get(
       'https://search.naver.com/search.naver?where=post&sm=tab_jum&query='
@@ -46,18 +49,20 @@ export class ActivityService {
     const $ = Cheerio.load(data);
     for (let i = 1; i <= 3; i++) {
       const blog = $(`#sp_blog_${i}`);
-      
+
       const info: IActivityInfo = {
         title: blog.find('dl > dt > a').attr('title'),
         description: blog.find('dl > dd.sh_blog_passage.sh_blog_passage').text(),
         author: blog.find('dl > dd.txt_block > span > a:nth-child(1)').text(),
         url: blog.find('dl > dd.txt_block > span > a.url').attr('href'),
-      }
+      };
 
       items.push(info);
-      // console.log(blog);
     }
 
-    return items;
-  }
+    const { title, author } = activity;
+    const ids = (await this.activityInfoCollection.insertMany(items)).insertedIds;
+    await this.activityCollection.update({ title, author },
+        { $set: { links: Object.values(ids) } } );
+    }
 }
