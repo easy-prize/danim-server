@@ -13,6 +13,12 @@
     "paths": {
       "@app/app": [
         "libs/app/src"
+      ],
+      "@app/config": [
+        "libs/config/src"
+      ],
+      "@app/mongo": [
+        "libs/mongo/src"
       ]
     }
   },
