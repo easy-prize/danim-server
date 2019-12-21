@@ -64,6 +64,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/course/tsconfig.lib.json"
       }
+    },
+    "ownership": {
+      "type": "library",
+      "root": "libs/ownership",
+      "entryFile": "index",
+      "sourceRoot": "libs/ownership/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/ownership/tsconfig.lib.json"
+      }
     }
   },
   "compilerOptions": {

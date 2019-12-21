@@ -1,5 +1,5 @@
 import { UserService } from '@app/user';
-import { Body, Controller, Delete, ForbiddenException, Get, Headers, Inject, Param, Put, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, Headers, Inject, Param, Patch, Put, ValidationPipe } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ObjectId } from 'mongodb';
 import { Course } from './course.class';
@@ -58,6 +58,17 @@ export class CourseController {
   ) {
     await this.checkOwnerOrReject(this.userService.verify(token).idx, ObjectId.createFromHexString(course));
     await this.courseService.addActivityToCourse(ObjectId.createFromHexString(course), activities.map((i) => ObjectId.createFromHexString(i)), index);
+  }
+
+  @Patch(':course')
+  @ApiBearerAuth()
+  public async patchActivity(
+    @Param('course') course: string,
+    @Body(new ValidationPipe()) { activities }: ModifyActivityDto,
+    @Headers() { authorization: token },
+  ) {
+    await this.checkOwnerOrReject(this.userService.verify(token).idx, ObjectId.createFromHexString(course));
+    await this.courseService.patchActivitiesInCourse(ObjectId.createFromHexString(course), activities.map((i) => ObjectId.createFromHexString(i)));
   }
 
   @Delete(':course')

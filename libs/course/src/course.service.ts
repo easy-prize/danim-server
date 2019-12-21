@@ -35,6 +35,16 @@ export class CourseService {
     });
   }
 
+  public async patchActivitiesInCourse(courseId: ObjectId, activityIds: ObjectId[]) {
+    await this.courseCollection.updateOne({
+      _id: courseId,
+    }, {
+      $set: {
+        activities: activityIds,
+      },
+    });
+  }
+
   public async removeActivitiesInCourse(courseId: ObjectId, activityIds: ObjectId[]) {
     await this.courseCollection.updateOne({
       _id: courseId,

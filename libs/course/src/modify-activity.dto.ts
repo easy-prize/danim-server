@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsMongoId, IsNumber, IsOptional, ValidateNested } from 'class-validator';
+import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 export class ModifyActivityDto {
   @ValidateNested()
-  @IsMongoId()
+  @IsString()
   @Type(() => String)
   @ApiProperty({
     description: 'ObjectIds',
